@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from app.routers import meetings_router, action_items_router
 
 app = FastAPI(
     title="Meeting Accountability Tracker API",
@@ -15,6 +16,10 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Mount routers
+app.include_router(meetings_router)
+app.include_router(action_items_router)
 
 @app.get("/")
 async def root():
