@@ -1,0 +1,24 @@
+{
+  "manifest_version": 3,
+  "name": "MeetTrack",
+  "version": "1.0.0",
+  "description": "Automatically track action items from your Google Meet meetings",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://meet.google.com/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "MeetTrack"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://meet.google.com/*"],
+      "js": ["content.js"]
+    }
+  ]
+}

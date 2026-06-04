@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MeetTrack</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      width: 320px;
+      min-height: 400px;
+      background: #0f0f1a;
+      color: #ffffff;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      padding: 20px;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #2a2a3a;
+    }
+    .logo {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, #7c3aed, #4f46e5);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+    }
+    .title { font-size: 18px; font-weight: 600; }
+    .subtitle { font-size: 12px; color: #888; margin-top: 2px; }
+    .status-card {
+      background: #1a1a2e;
+      border: 1px solid #2a2a3a;
+      border-radius: 10px;
+      padding: 14px;
+      margin-bottom: 14px;
+    }
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #22c55e;
+      display: inline-block;
+      margin-right: 6px;
+    }
+    .status-dot.inactive { background: #ef4444; }
+    .status-text { font-size: 13px; color: #ccc; }
+    .meeting-title {
+      font-size: 14px;
+      font-weight: 500;
+      margin-top: 8px;
+      color: #a78bfa;
+    }
+    .btn {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 10px;
+      transition: opacity 0.2s;
+    }
+    .btn:hover { opacity: 0.9; }
+    .btn-primary {
+      background: linear-gradient(135deg, #7c3aed, #4f46e5);
+      color: white;
+    }
+    .btn-secondary {
+      background: #1a1a2e;
+      color: #a78bfa;
+      border: 1px solid #3a3a5a;
+    }
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    .result-box {
+      background: #1a1a2e;
+      border: 1px solid #2a2a3a;
+      border-radius: 10px;
+      padding: 12px;
+      margin-top: 10px;
+      font-size: 12px;
+      color: #ccc;
+      line-height: 1.6;
+      max-height: 150px;
+      overflow-y: auto;
+      display: none;
+    }
+    .action-item {
+      background: #2a1a4e;
+      border-left: 3px solid #7c3aed;
+      padding: 8px;
+      margin-bottom: 6px;
+      border-radius: 0 6px 6px 0;
+    }
+    .action-item .task { font-weight: 500; color: #e2d9f3; }
+    .action-item .meta { color: #888; font-size: 11px; margin-top: 3px; }
+    .loader { text-align: center; color: #7c3aed; font-size: 13px; display: none; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="logo">🎯</div>
+    <div>
+      <div class="title">MeetTrack</div>
+      <div class="subtitle">Meeting Accountability Tracker</div>
+    </div>
+  </div>
+
+  <div class="status-card">
+    <span class="status-dot" id="statusDot"></span>
+    <span class="status-text" id="statusText">Checking meeting status...</span>
+    <div class="meeting-title" id="meetingTitle"></div>
+  </div>
+
+  <button class="btn btn-primary" id="trackBtn" disabled>
+    🎤 Start Tracking This Meeting
+  </button>
+
+  <button class="btn btn-secondary" id="extractBtn" disabled>
+    🤖 Extract Action Items
+  </button>
+
+  <div class="loader" id="loader">Processing... please wait ⏳</div>
+
+  <div class="result-box" id="resultBox"></div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
