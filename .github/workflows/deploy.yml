@@ -1,0 +1,70 @@
+name: MeetTrack CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test-backend:
+    runs-on: ubuntu-latest
+    name: Test Backend
+    
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
+      
+      - name: Install dependencies
+        run: |
+          cd backend
+          pip install -r requirements.txt
+      
+      - name: Check Python syntax
+        run: |
+          cd backend
+          python -m py_compile main.py
+          python -m py_compile app/routers/meetings.py
+          python -m py_compile app/routers/action_items.py
+          python -m py_compile app/routers/transcribe.py
+          python -m py_compile app/routers/extract.py
+          python -m py_compile app/routers/notify.py
+          echo "✅ All Python files compiled successfully!"
+
+  test-frontend:
+    runs-on: ubuntu-latest
+    name: Test Frontend
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: |
+          cd frontend
+          npm install
+
+      - name: Build frontend
+        run: |
+          cd frontend
+          npm run build
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+
+  success:
+    runs-on: ubuntu-latest
+    needs: [test-backend, test-frontend]
+    name: All Tests Passed
+
+    steps:
+      - name: Success
+        run: echo "🎉 All tests passed! MeetTrack is ready to deploy!"
