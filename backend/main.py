@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.routers import meetings_router, action_items_router, transcribe_router
+from app.routers import meetings_router, action_items_router, transcribe_router, extract_router, notify_router
 
 app = FastAPI(
     title="Meeting Accountability Tracker API",
@@ -8,19 +8,19 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# Configure CORS for frontend access
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Adjust in production to frontend domain
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Mount routers
 app.include_router(meetings_router)
 app.include_router(action_items_router)
 app.include_router(transcribe_router)
+app.include_router(extract_router)
+app.include_router(notify_router)
 
 @app.get("/")
 async def root():
@@ -32,6 +32,4 @@ async def root():
 
 @app.get("/health")
 async def health_check():
-    return {
-        "status": "healthy"
-    }
+    return {"status": "healthy"}
