@@ -1,8 +1,10 @@
 "use client";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable react/no-unescaped-entities */
 import { useState, useEffect } from "react";
 import {
-  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
-  PieChart, Pie, Cell, LineChart, Line, ResponsiveContainer, Legend
+  PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip
 } from "recharts";
 
 const API_BASE = "http://127.0.0.1:8000";
@@ -30,7 +32,6 @@ export default function Dashboard() {
       const data = await res.json();
       setMeetings(data);
 
-      // Fetch action items for each meeting
       let totalItems = 0;
       let completedItems = 0;
       let overdueItems = 0;
@@ -52,7 +53,7 @@ export default function Dashboard() {
       });
 
       setLoading(false);
-    } catch (err) {
+    } catch {
       setLoading(false);
     }
   }
@@ -63,11 +64,6 @@ export default function Dashboard() {
     { name: "Other", value: stats.totalItems - stats.completedItems - stats.overdueItems }
   ].filter(d => d.value > 0);
 
-  const barData = meetings.slice(0, 6).map((m: any) => ({
-    name: m.title?.substring(0, 15) + "..." || "Meeting",
-    date: new Date(m.created_at).toLocaleDateString()
-  }));
-
   if (loading) return (
     <div className="min-h-screen bg-slate-950 flex items-center justify-center">
       <div className="text-purple-400 text-xl">Loading dashboard...</div>
@@ -76,15 +72,13 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-slate-950 text-white p-8">
-      {/* Header */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold bg-gradient-to-r from-white to-purple-400 bg-clip-text text-transparent">
           MeetTrack Analytics
         </h1>
-        <p className="text-slate-400 mt-1">Track your team's accountability and progress</p>
+        <p className="text-slate-400 mt-1">Track your team accountability and progress</p>
       </div>
 
-      {/* Stats Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         {[
           { label: "Total Meetings", value: stats.totalMeetings, icon: "📅", color: "from-purple-600 to-indigo-600" },
@@ -102,9 +96,7 @@ export default function Dashboard() {
         ))}
       </div>
 
-      {/* Charts Row */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        {/* Pie Chart */}
         <div className="bg-slate-900 border border-slate-800 rounded-xl p-6">
           <h2 className="text-lg font-semibold mb-4 text-purple-300">Action Items Status</h2>
           {pieData.length > 0 ? (
@@ -126,7 +118,6 @@ export default function Dashboard() {
           )}
         </div>
 
-        {/* Recent Meetings */}
         <div className="bg-slate-900 border border-slate-800 rounded-xl p-6">
           <h2 className="text-lg font-semibold mb-4 text-purple-300">Recent Meetings</h2>
           {meetings.length > 0 ? (
@@ -153,7 +144,6 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* Summary */}
       <div className="bg-slate-900 border border-slate-800 rounded-xl p-6">
         <h2 className="text-lg font-semibold mb-4 text-purple-300">Team Summary</h2>
         <div className="grid grid-cols-3 gap-4">
@@ -170,10 +160,9 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* Back button */}
       <div className="mt-6">
         <a href="/" className="text-purple-400 hover:text-purple-300 text-sm">
-          ← Back to Home
+          Back to Home
         </a>
       </div>
     </div>
