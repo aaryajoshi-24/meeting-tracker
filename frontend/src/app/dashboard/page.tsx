@@ -7,7 +7,7 @@ import {
   PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip
 } from "recharts";
 
-const API_BASE = "http://127.0.0.1:8000";
+const API_BASE = "https://meettrack-api.onrender.com";
 
 const COLORS = ["#7c3aed", "#4f46e5", "#22c55e", "#f59e0b", "#ef4444"];
 
