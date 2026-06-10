@@ -38,7 +38,7 @@ export default function AppPage() {
     } catch { alert("Error!"); }
     setLoading(false);
   }
-  async function sendReminder(item) {
+  async function sendReminder(item: any) {
     try {
       await fetch(API_BASE + "/notify", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ task: item.task, assigned_to: item.assigned_to, deadline: item.deadline, meeting_title: meetingTitle }) });
       alert("Slack reminder sent!");
@@ -109,4 +109,5 @@ export default function AppPage() {
     </div>
   );
 }
+
 
