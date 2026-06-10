@@ -16,7 +16,7 @@ export default function AppPage() {
     try {
       const res = await fetch(API_BASE + "/meetings", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ title: meetingTitle, description: "Created via MeetTrack", meeting_date: new Date().toISOString() }) });
       const data = await res.json(); setMeetingId(data.id); setStep(2);
-    } catch(e) { alert("Error!"); }
+    } catch { alert("Error!"); }
     setLoading(false);
   }
   async function transcribeAudio() {
@@ -26,7 +26,7 @@ export default function AppPage() {
       const formData = new FormData(); formData.append("file", audioFile);
       const res = await fetch(API_BASE + "/transcribe", { method: "POST", body: formData });
       const data = await res.json(); setTranscript(data.transcript); setStep(3);
-    } catch(e) { alert("Error!"); }
+    } catch { alert("Error!"); }
     setLoading(false);
   }
   async function extractItems() {
@@ -34,14 +34,14 @@ export default function AppPage() {
     try {
       const res = await fetch(API_BASE + "/extract", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ transcript: transcript, meeting_id: meetingId }) });
       const data = await res.json(); setActionItems(data.action_items); setStep(4);
-    } catch(e) { alert("Error!"); }
+    } catch { alert("Error!"); }
     setLoading(false);
   }
   async function sendReminder(item) {
     try {
       await fetch(API_BASE + "/notify", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ task: item.task, assigned_to: item.assigned_to, deadline: item.deadline, meeting_title: meetingTitle }) });
       alert("Slack reminder sent!");
-    } catch(e) { alert("Error!"); }
+    } catch { alert("Error!"); }
   }
   return (
     <div className="min-h-screen bg-slate-950 text-white">
