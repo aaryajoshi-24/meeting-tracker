@@ -1,4 +1,5 @@
 ﻿"use client";
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from "react";
 const API_BASE = "https://meettrack-api.onrender.com";
 export default function AppPage() {
@@ -108,3 +109,4 @@ export default function AppPage() {
     </div>
   );
 }
+
